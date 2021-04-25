@@ -15,6 +15,7 @@ the repository structure:
 - Modified some of the git commit history to clean it up. This means the git
   history is different from the original repo.
 - Added .gitignore
+- Refactored *many* files to improve project structure and organization.
 
 ## v6.0
 
