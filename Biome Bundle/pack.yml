@@ -1,0 +1,111 @@
+id:      BiomeBundle
+author:  solonovamax + The BiomeBundle Team
+version: 6.0.0
+
+blend:
+  terrain:
+    step:      3
+    elevation: 4
+
+beta:
+  carving: false
+
+vanilla:
+  mobs: true
+
+noise:
+  noise2: # 2D Noise
+    type:       FBm
+    dimensions: 2
+    octaves:    4
+    function:
+      type:      OpenSimplex2
+      frequency: 0.0075
+  noise3: # 3D Noise
+    type:       FBm
+    dimensions: 3
+    octaves:    4
+    function:
+      type:      OpenSimplex2
+      frequency: 0.0075
+  rand: # Random White Noise
+    dimensions: 3
+    type:       WhiteNoise
+  desert: # Desert Noise
+    type:       DomainWarp
+    dimensions: 2
+    amplitude:  20
+    function:
+      type:      Cellular
+      frequency: 0.025
+      return:    Distance
+    warp:
+      frquency: 0.015
+      type:     OpenSimplex2
+  noiseC: # idk
+    dimensions: 2
+    type:       Cellular
+    frequency:  0.25
+    return:     NoiseLookup
+    lookup:
+      type:    FBm
+      octaves: 4
+      function:
+        type:      OpenSimplex2
+        frequency: 0.02
+  bubble: # Bubbly noise
+    dimensions: 2
+    type:       LINEAR
+    min:        -0.75
+    max:        -1
+    function:
+      type: CLAMP
+      min:  -1
+      max:  -0.6
+      function:
+        type:      Cellular
+        frequency: 0.075
+        return:    Distance2Add
+
+biome:
+  # Type
+  type:       PIPELINE
+  # General biome config
+  resolution: 4
+  blend:
+    amplitude: 1.75
+    noise:
+      type:      OpenSimplex2
+      frequency: 0.12
+  # Single Config
+  biome:
+  # Image Config
+  image:
+    name:  biome-bundle-image.png
+    align: CENTER
+  # Pipeline config
+  pipeline:
+    initial size: 4
+    source:
+      type: NOISE
+      biomes:
+        OCEAN:  1
+        PLAINS: 2
+      noise:
+        type: FBm
+        function:
+          type:      OpenSimplex2
+          frequency: 0.04
+      stages:
+        - # First Stage
+          expand:
+            type: FRACTAL
+            noise:
+              type: WhiteNoise
+              salt: 11
+        - # Final Stage
+          mutate:
+            type: SMOOTH
+            noise:
+              type: WhiteNoise
+              salt: 182
